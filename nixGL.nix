@@ -213,7 +213,7 @@ let
       _nvidiaVersionFile = if nvidiaVersionFile != null then
         nvidiaVersionFile
       else
-      builtins.trace "DEBUG: ${nvidiaVersionFile}" &&
+      (builtins.trace "DEBUG: ${nvidiaVersionFile}") &&
       # HACK: Get the version from /proc. It turns out that /proc is mounted
       # inside of the build sandbox and varies from machine to machine.
       #
