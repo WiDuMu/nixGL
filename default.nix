@@ -21,6 +21,7 @@
   # Enable all Intel specific extensions which only works on x86_64
   enableIntelX86Extensions ? true
 }:
+builtins.trace "DEBUG: ${nvidiaVersionFile}" (
 pkgs.callPackage ./nixGL.nix ({
   inherit
     nvidiaVersion
@@ -31,4 +32,4 @@ pkgs.callPackage ./nixGL.nix ({
   } // (if enableIntelX86Extensions then {}
   else {
     intel-media-driver = null;
-  }))
+  })))
