@@ -213,19 +213,19 @@ let
       _nvidiaVersionFile = if nvidiaVersionFile != null then
         nvidiaVersionFile
       else
-      (builtins.trace "DEBUG: ${nvidiaVersionFile}") &&
+      (builtins.trace "DEBUG: ${nvidiaVersionFile}"
       # HACK: Get the version from /proc. It turns out that /proc is mounted
       # inside of the build sandbox and varies from machine to machine.
       #
       # builtins.readFile is not able to read /proc files. See
       # https://github.com/NixOS/nix/issues/3539.
-        runCommand "impure-nvidia-version-file" {
+        (runCommand "impure-nvidia-version-file" {
           # To avoid sharing the build result over time or between machine,
           # Add an impure parameter to force the rebuild on each access.
           time = builtins.currentTime;
           preferLocalBuild = true;
           allowSubstitutes = false;
-        } "cp /proc/driver/nvidia/version $out 2> /dev/null || touch $out";
+        } "cp /proc/driver/nvidia/version $out 2> /dev/null || touch $out"));
 
       # The nvidia version. Either fixed by the `nvidiaVersion` argument, or
       # auto-detected. Auto-detection is impure.
